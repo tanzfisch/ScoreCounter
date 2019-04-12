@@ -1,0 +1,108 @@
+﻿<Window x:Class="ScoreCounter.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:ScoreCounter"
+        mc:Ignorable="d"
+        Title="MainWindow" Height="450" Width="800" WindowStyle="None" ResizeMode="NoResize"  
+    WindowStartupLocation="CenterScreen" WindowState="Maximized" Background="Black">
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="0.5*" />
+            <ColumnDefinition Width="1*" />
+            <ColumnDefinition Width="2*" />
+            <ColumnDefinition Width="1*" />
+            <ColumnDefinition Width="0.5*" />
+        </Grid.ColumnDefinitions>
+        <Grid Grid.Column="1">
+            
+        </Grid>
+        <Grid Grid.Column="2">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="2*"></RowDefinition>
+                <RowDefinition Height="1*"></RowDefinition>
+            </Grid.RowDefinitions>
+            <GroupBox Grid.Row="0" Header="Game Time" Foreground="White" FontWeight="Bold">
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="1*"></ColumnDefinition>
+                        <ColumnDefinition Width="3*"></ColumnDefinition>
+                        <ColumnDefinition Width="1*"></ColumnDefinition>
+                    </Grid.ColumnDefinitions>
+                    <Grid Grid.Column="1">
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="1*"></RowDefinition>
+                            <RowDefinition Height="2*"></RowDefinition>
+                            <RowDefinition Height="1*"></RowDefinition>
+                            <RowDefinition Height="2*"></RowDefinition>
+                        </Grid.RowDefinitions>
+                        <Grid Grid.Row="0">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="1*"></ColumnDefinition>
+                                <ColumnDefinition Width="0.3*"></ColumnDefinition>
+                                <ColumnDefinition Width="1*"></ColumnDefinition>
+                            </Grid.ColumnDefinitions>
+                            <Button Grid.Column="0" Content="+"></Button>
+                            <Button Grid.Column="2" Content="+"></Button>
+                        </Grid>
+                        <Viewbox Grid.Row="1">
+                            <Label Content="12:12" Foreground="Green" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" FontWeight="Bold" Margin="0" Padding="0" FontFamily="Tw Cen MT Condensed Extra Bold"/>
+                        </Viewbox>
+                        <Grid Grid.Row="2">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="1*"></ColumnDefinition>
+                                <ColumnDefinition Width="0.3*"></ColumnDefinition>
+                                <ColumnDefinition Width="1*"></ColumnDefinition>
+                            </Grid.ColumnDefinitions>
+                            <Button Grid.Column="0" Content="-"></Button>
+                            <Button Grid.Column="2" Content="-"></Button>
+                        </Grid>
+                        <Grid Grid.Row="3">
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="1*"></RowDefinition>
+                                <RowDefinition Height="1*"></RowDefinition>
+                            </Grid.RowDefinitions>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="1*"></ColumnDefinition>
+                                <ColumnDefinition Width="1*"></ColumnDefinition>
+                                <ColumnDefinition Width="1*"></ColumnDefinition>
+                                <ColumnDefinition Width="1*"></ColumnDefinition>
+                            </Grid.ColumnDefinitions>
+                            <Button Grid.Row="0" Grid.Column="0" Content="3:00"></Button>
+                            <Button Grid.Row="0" Grid.Column="1" Content="5:00"></Button>
+                            <Button Grid.Row="0" Grid.Column="2" Content="7:00"></Button>
+                            <Button Grid.Row="0" Grid.Column="3" Content="10:00"></Button>
+                            <Button Grid.Row="1" Grid.Column="0" Content="20:00"></Button>
+                            <Button Grid.Row="1" Grid.Column="1" Content="25:00"></Button>
+                            <Button Grid.Row="1" Grid.Column="2" Content="Custom"></Button>
+                            <Button Grid.Row="1" Grid.Column="3" Content="Reset"></Button>
+                        </Grid>
+                    </Grid>
+                    <Grid Grid.Column="2">
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="1*"></RowDefinition>
+                            <RowDefinition Height="1*"></RowDefinition>
+                            <RowDefinition Height="1*"></RowDefinition>
+                            <RowDefinition Height="1*"></RowDefinition>
+                            <RowDefinition Height="1*"></RowDefinition>
+                            <RowDefinition Height="1*"></RowDefinition>
+                        </Grid.RowDefinitions>
+                        <Button Grid.Row="0" Content="Start"></Button>
+                        <Button Grid.Row="1" Content="Button1"></Button>
+                        <Button Grid.Row="2" Content="Button2"></Button>
+                        <Button Grid.Row="3" Content="Button3"></Button>
+                        <Button Grid.Row="4" Content="Button4"></Button>
+                        <Button Grid.Row="5" Content="Button5"></Button>
+                    </Grid>
+                </Grid>
+            </GroupBox>
+            <GroupBox Grid.Row="1" Header="Break Time" Foreground="White" FontWeight="Bold">
+            </GroupBox>
+        </Grid>
+        <Grid Grid.Column="3">
+            
+        </Grid>
+    </Grid>
+</Window>
+
