@@ -77,6 +77,13 @@ namespace ScoreCounter
             timerGameTime = new DispatcherTimer(new TimeSpan(0, 0, 0, 0, 100), DispatcherPriority.Normal, delegate
             {
                 updateGametimeLabel();
+
+                if (gameTime == TimeSpan.FromMinutes(1))
+                {
+                    System.Media.SoundPlayer player = new System.Media.SoundPlayer(@"..\..\sounds\60sec.wav");
+                    player.Play();
+                }
+
                 if (gameTime == TimeSpan.Zero)
                 {
                     timerGameTime.Stop();
