@@ -70,7 +70,7 @@
                             <Button IsEnabled="True" Grid.Column="2" Content="+"></Button>
                         </Grid>
                         <Viewbox Grid.Row="1">
-                            <Label Content="12:12" Foreground="Green" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" FontWeight="Bold" Margin="0" Padding="0" FontFamily="Tw Cen MT Condensed Extra Bold"/>
+                            <Label Name="labelGameTime" Content="00:00" Foreground="Green" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" FontWeight="Bold" Margin="0" Padding="0" FontFamily="Tw Cen MT Condensed Extra Bold"/>
                         </Viewbox>
                         <Grid Grid.Row="2">
                             <Grid.ColumnDefinitions>
@@ -92,14 +92,14 @@
                                 <ColumnDefinition Width="1*"></ColumnDefinition>
                                 <ColumnDefinition Width="1*"></ColumnDefinition>
                             </Grid.ColumnDefinitions>
-                            <Button IsEnabled="True" Grid.Row="0" Grid.Column="0" Content="3:00"></Button>
-                            <Button IsEnabled="True" Grid.Row="0" Grid.Column="1" Content="5:00"></Button>
-                            <Button IsEnabled="True" Grid.Row="0" Grid.Column="2" Content="7:00"></Button>
-                            <Button IsEnabled="True" Grid.Row="0" Grid.Column="3" Content="10:00"></Button>
-                            <Button IsEnabled="True" Grid.Row="1" Grid.Column="0" Content="20:00"></Button>
-                            <Button IsEnabled="True" Grid.Row="1" Grid.Column="1" Content="25:00"></Button>
-                            <Button IsEnabled="True" Grid.Row="1" Grid.Column="2" Content="Custom"></Button>
-                            <Button IsEnabled="True" Grid.Row="1" Grid.Column="3" Content="Reset"></Button>
+                            <Button IsEnabled="True" Grid.Row="0" Grid.Column="0" Content="3:00" Click="Button_Click300"></Button>
+                            <Button IsEnabled="True" Grid.Row="0" Grid.Column="1" Content="5:00" Click="Button_Click500"></Button>
+                            <Button IsEnabled="True" Grid.Row="0" Grid.Column="2" Content="7:00" Click="Button_Click700"></Button>
+                            <Button IsEnabled="True" Grid.Row="0" Grid.Column="3" Content="10:00" Click="Button_Click1000"></Button>
+                            <Button IsEnabled="True" Grid.Row="1" Grid.Column="0" Content="20:00" Click="Button_Click2000"></Button>
+                            <Button IsEnabled="True" Grid.Row="1" Grid.Column="1" Content="25:00" Click="Button_Click2500"></Button>
+                            <Button IsEnabled="False" Grid.Row="1" Grid.Column="2" Content="Custom"></Button>
+                            <Button IsEnabled="False" Grid.Row="1" Grid.Column="3" Content="Reset"></Button>
                         </Grid>
                     </Grid>
                     <Grid Grid.Column="2">
@@ -111,7 +111,7 @@
                             <RowDefinition Height="1*"></RowDefinition>
                             <RowDefinition Height="1*"></RowDefinition>
                         </Grid.RowDefinitions>
-                        <Button IsEnabled="True" Grid.Row="0" Content="Start"></Button>
+                        <Button IsEnabled="True" Grid.Row="0" Content="Start" Click="Button_ClickStart"></Button>
                         <Button IsEnabled="True" Grid.Row="1" Content="Button1"></Button>
                         <Button IsEnabled="True" Grid.Row="2" Content="Button2"></Button>
                         <Button IsEnabled="True" Grid.Row="3" Content="Button3"></Button>
