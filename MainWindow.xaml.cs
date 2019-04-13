@@ -1,17 +1,7 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using System.Configuration;
 using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
 using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
 using System.Windows.Threading;
 
 namespace ScoreCounter
@@ -21,6 +11,14 @@ namespace ScoreCounter
     /// </summary>
     public partial class MainWindow : Window
     {
+        public class Settings
+        {
+            public TimeSpan gameTime = TimeSpan.FromMinutes(10);
+            public TimeSpan breakTime = TimeSpan.FromMinutes(2);
+            public TimeSpan timeoutTime = TimeSpan.FromMinutes(1);
+            public int timeoutCount = 0;
+        }
+
         private DispatcherTimer timerGameTime;
         private TimeSpan gameTime;
         private TimeSpan resetGameTime;
@@ -31,17 +29,76 @@ namespace ScoreCounter
         private uint pointsTeam1;
         private uint pointsTeam2;
 
+        static public Settings settings = new Settings();
+
         public MainWindow()
         {
             InitializeComponent();
+
+            readSettings();
             initTimer();
 
-            setResetGameTime(TimeSpan.FromMinutes(5));
+            setResetGameTime(settings.gameTime);
             setGameTime(resetGameTime);
-            setResetBreakTime(TimeSpan.FromMinutes(2));
+            setResetBreakTime(settings.breakTime);
             setBreakTime(resetBreakTime);
 
             initLogos();
+
+            readSettings();
+        }
+
+        private void readSettings()
+        {
+            var appSettings = ConfigurationManager.AppSettings;
+            int value = 0;
+            if (int.TryParse(appSettings["GameTime"], out value))
+            {
+                settings.gameTime = TimeSpan.FromSeconds(value);
+            }
+            if (int.TryParse(appSettings["BreakTime"], out value))
+            {
+                settings.breakTime = TimeSpan.FromSeconds(value);
+            }
+            if (int.TryParse(appSettings["TimeoutTime"], out value))
+            {
+                settings.timeoutTime = TimeSpan.FromSeconds(value);
+            }
+            if (int.TryParse(appSettings["TimeoutCount"], out value))
+            {
+                settings.timeoutCount = value;
+            }
+        }
+
+        static void AddUpdateAppSettings(string key, string value)
+        {
+            try
+            {
+                var configFile = ConfigurationManager.OpenExeConfiguration(ConfigurationUserLevel.None);
+                var settings = configFile.AppSettings.Settings;
+                if (settings[key] == null)
+                {
+                    settings.Add(key, value);
+                }
+                else
+                {
+                    settings[key].Value = value;
+                }
+                configFile.Save(ConfigurationSaveMode.Modified);
+                ConfigurationManager.RefreshSection(configFile.AppSettings.SectionInformation.Name);
+            }
+            catch (ConfigurationErrorsException)
+            {
+                Console.WriteLine("Error writing app settings");
+            }
+        }
+
+        private void writeSettings()
+        {
+            AddUpdateAppSettings("GameTime", settings.gameTime.TotalSeconds.ToString());
+            AddUpdateAppSettings("BreakTime", settings.breakTime.TotalSeconds.ToString());
+            AddUpdateAppSettings("TimeoutTime", settings.timeoutTime.TotalSeconds.ToString());
+            AddUpdateAppSettings("TimeoutCount", settings.timeoutCount.ToString());
         }
 
         private void setResetBreakTime(TimeSpan timeSpan)
@@ -70,9 +127,11 @@ namespace ScoreCounter
 
                 if (gameTime == TimeSpan.Zero)
                 {
+                    System.Media.SoundPlayer player = new System.Media.SoundPlayer(@"..\sounds\beeeeep.wav");
+                    player.Play();
+
                     stopGameTime();
                     setBreakTime(resetBreakTime);
-                    startBreakTime();
                 }
                 gameTime = gameTime.Add(TimeSpan.FromMilliseconds(-100));
             }, Application.Current.Dispatcher);
@@ -139,46 +198,24 @@ namespace ScoreCounter
 
         private void initLogos()
         {
-            LogoLowerLeft.Source = new BitmapImage(new Uri(AppDomain.CurrentDomain.BaseDirectory + @"..\logos\LogoLowerLeft.png", UriKind.Absolute));
-            LogoLowerRight.Source = new BitmapImage(new Uri(AppDomain.CurrentDomain.BaseDirectory + @"..\logos\LogoLowerRight.png", UriKind.Absolute));
-            LogoUpperLeft.Source = new BitmapImage(new Uri(AppDomain.CurrentDomain.BaseDirectory + @"..\logos\LogoUpperLeft.png", UriKind.Absolute));
-            LogoUpperRight.Source = new BitmapImage(new Uri(AppDomain.CurrentDomain.BaseDirectory + @"..\logos\LogoUpperRight.png", UriKind.Absolute));
-        }
+            try {
+                LogoLowerLeft.Source = new BitmapImage(new Uri(AppDomain.CurrentDomain.BaseDirectory + @"..\logos\LogoLowerLeft.png", UriKind.Absolute));
+            } catch { }
 
-        private void Button_Click300(object sender, RoutedEventArgs e)
-        {
-            setResetGameTime(TimeSpan.FromMinutes(3));
-            setGameTime(resetGameTime);
-        }
+            try
+            {
+                LogoLowerRight.Source = new BitmapImage(new Uri(AppDomain.CurrentDomain.BaseDirectory + @"..\logos\LogoLowerRight.png", UriKind.Absolute));
+            } catch { }
 
-        private void Button_Click500(object sender, RoutedEventArgs e)
-        {
-            setResetGameTime(TimeSpan.FromMinutes(5));
-            setGameTime(resetGameTime);
-        }
+            try
+            {
+                LogoUpperLeft.Source = new BitmapImage(new Uri(AppDomain.CurrentDomain.BaseDirectory + @"..\logos\LogoUpperLeft.png", UriKind.Absolute));
+            } catch { }
 
-        private void Button_Click700(object sender, RoutedEventArgs e)
-        {
-            setResetGameTime(TimeSpan.FromMinutes(7));
-            setGameTime(resetGameTime);
-        }
-
-        private void Button_Click1000(object sender, RoutedEventArgs e)
-        {
-            setResetGameTime(TimeSpan.FromMinutes(10));
-            setGameTime(resetGameTime);
-        }
-
-        private void Button_Click2000(object sender, RoutedEventArgs e)
-        {
-            setResetGameTime(TimeSpan.FromMinutes(20));
-            setGameTime(resetGameTime);
-        }
-
-        private void Button_Click2500(object sender, RoutedEventArgs e)
-        {
-            setResetGameTime(TimeSpan.FromMinutes(25));
-            setGameTime(resetGameTime);
+            try
+            {
+                LogoUpperRight.Source = new BitmapImage(new Uri(AppDomain.CurrentDomain.BaseDirectory + @"..\logos\LogoUpperRight.png", UriKind.Absolute));
+            } catch { }
         }
 
         private void setGameTime(TimeSpan timeSpan)
@@ -208,6 +245,9 @@ namespace ScoreCounter
             if (timerGameTime.IsEnabled)
             {
                 stopGameTime();
+
+                setBreakTime(resetBreakTime);
+                startBreakTime();
             }
             else
             {
@@ -219,9 +259,6 @@ namespace ScoreCounter
         {
             timerGameTime.Stop();
             buttonStartGameTime.Content = "Start";
-
-            setBreakTime(resetBreakTime);
-            startBreakTime();
         }
 
         private void startGameTime()
@@ -303,6 +340,8 @@ namespace ScoreCounter
         {
             timerBreakTime.Start();
             buttonStartBreakTime.Content = "Stop";
+            buttonTeam1Timeout.IsEnabled = true;
+            buttonTeam2Timeout.IsEnabled = true;
         }
 
         private void Button_ClickBreakTime200(object sender, RoutedEventArgs e)
@@ -379,5 +418,33 @@ namespace ScoreCounter
             }
             updateGameTimeLabel();
         }
+
+        private void Button_ClickTeam1TimeOut(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void Button_ClickTeam2TimeOut(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void Button_ClickOpenSettings(object sender, RoutedEventArgs e)
+        {
+            SettingsDialog dialog = new SettingsDialog();
+            dialog.Show();
+        }
+
+        private void Window_Closing(object sender, System.ComponentModel.CancelEventArgs e)
+        {
+            writeSettings();
+        }
+
+        private void Button_ClickNewGame(object sender, System.ComponentModel.CancelEventArgs e)
+        {
+            // TODO reset everything for the next game
+        }
+
+        
     }
 }
