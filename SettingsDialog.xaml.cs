@@ -16,7 +16,6 @@ namespace ScoreCounter
             textBoxGameTime.Text = MainWindow.settings.gameTime.TotalSeconds.ToString();
             textBoxBreakTime.Text = MainWindow.settings.breakTime.TotalSeconds.ToString();
             textBoxTimeoutTime.Text = MainWindow.settings.timeoutTime.TotalSeconds.ToString();
-            textBoxTimeoutCount.Text = MainWindow.settings.timeoutCount.ToString();
         }
 
         private void Button_ClickOk(object sender, RoutedEventArgs e)
@@ -42,13 +41,6 @@ namespace ScoreCounter
                 return;
             }
             MainWindow.settings.timeoutTime = TimeSpan.FromSeconds(value);
-
-            if (!int.TryParse(textBoxTimeoutCount.Text, out value))
-            {
-                textBoxTimeoutCount.Background = Brushes.Red;
-                return;
-            }
-            MainWindow.settings.timeoutCount = value;
 
             Close();
         }

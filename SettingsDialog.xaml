@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:ScoreCounter"
         mc:Ignorable="d"
-        Title="SettingsDialog" Height="190" Width="300">
+        Title="SettingsDialog" Height="160" Width="300">
     <Grid>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="auto"></ColumnDefinition>
@@ -17,19 +17,16 @@
             <RowDefinition Height="auto"></RowDefinition>
             <RowDefinition Height="auto"></RowDefinition>
             <RowDefinition Height="auto"></RowDefinition>
-            <RowDefinition Height="auto"></RowDefinition>
         </Grid.RowDefinitions>
         <Label Grid.Row="0" Content="Game Time:" HorizontalAlignment="Right"></Label>
         <Label Grid.Row="1" Content="Break Time:" HorizontalAlignment="Right"></Label>
         <Label Grid.Row="2" Content="Timeout Time:" HorizontalAlignment="Right"></Label>
-        <Label Grid.Row="3" Content="Timeout Count:" HorizontalAlignment="Right"></Label>
 
         <TextBox Name="textBoxGameTime" Grid.Row="0" Grid.Column="1" Grid.ColumnSpan="2" Margin="4"></TextBox>
         <TextBox Name="textBoxBreakTime" Grid.Row="1" Grid.Column="1" Grid.ColumnSpan="2" Margin="4"></TextBox>
         <TextBox Name="textBoxTimeoutTime"  Grid.Row="2" Grid.Column="1" Grid.ColumnSpan="2" Margin="4"></TextBox>
-        <TextBox Name="textBoxTimeoutCount"  Grid.Row="3" Grid.Column="1" Grid.ColumnSpan="2" Margin="4"></TextBox>
 
-        <Button Grid.Row="4" Grid.Column="2" Content="Ok" Margin="4" Click="Button_ClickOk"></Button>
-        <Button Grid.Row="4" Grid.Column="1" Content="Cancel" Margin="4" Click="Button_ClickCancel"></Button>
+        <Button Grid.Row="3" Grid.Column="2" Content="Ok" Margin="4" Click="Button_ClickOk"></Button>
+        <Button Grid.Row="3" Grid.Column="1" Content="Cancel" Margin="4" Click="Button_ClickCancel"></Button>
     </Grid>
 </Window>

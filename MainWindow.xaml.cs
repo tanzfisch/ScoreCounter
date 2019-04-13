@@ -16,7 +16,6 @@ namespace ScoreCounter
             public TimeSpan gameTime = TimeSpan.FromMinutes(10);
             public TimeSpan breakTime = TimeSpan.FromMinutes(2);
             public TimeSpan timeoutTime = TimeSpan.FromMinutes(1);
-            public int timeoutCount = 0;
         }
 
         private DispatcherTimer timerGameTime;
@@ -35,17 +34,11 @@ namespace ScoreCounter
         {
             InitializeComponent();
 
-            readSettings();
             initTimer();
-
-            setResetGameTime(settings.gameTime);
-            setGameTime(resetGameTime);
-            setResetBreakTime(settings.breakTime);
-            setBreakTime(resetBreakTime);
-
             initLogos();
 
             readSettings();
+            updateFromSettings();
         }
 
         private void readSettings()
@@ -64,10 +57,14 @@ namespace ScoreCounter
             {
                 settings.timeoutTime = TimeSpan.FromSeconds(value);
             }
-            if (int.TryParse(appSettings["TimeoutCount"], out value))
-            {
-                settings.timeoutCount = value;
-            }
+        }
+
+        private void updateFromSettings()
+        {
+            setResetGameTime(settings.gameTime);
+            setGameTime(resetGameTime);
+            setResetBreakTime(settings.breakTime);
+            setBreakTime(resetBreakTime);
         }
 
         static void AddUpdateAppSettings(string key, string value)
@@ -98,7 +95,6 @@ namespace ScoreCounter
             AddUpdateAppSettings("GameTime", settings.gameTime.TotalSeconds.ToString());
             AddUpdateAppSettings("BreakTime", settings.breakTime.TotalSeconds.ToString());
             AddUpdateAppSettings("TimeoutTime", settings.timeoutTime.TotalSeconds.ToString());
-            AddUpdateAppSettings("TimeoutCount", settings.timeoutCount.ToString());
         }
 
         private void setResetBreakTime(TimeSpan timeSpan)
@@ -132,6 +128,8 @@ namespace ScoreCounter
 
                     stopGameTime();
                     setBreakTime(resetBreakTime);
+
+                    buttonNextPoint.IsEnabled = false;
                 }
                 gameTime = gameTime.Add(TimeSpan.FromMilliseconds(-100));
             }, Application.Current.Dispatcher);
@@ -198,24 +196,29 @@ namespace ScoreCounter
 
         private void initLogos()
         {
-            try {
+            try
+            {
                 LogoLowerLeft.Source = new BitmapImage(new Uri(AppDomain.CurrentDomain.BaseDirectory + @"..\logos\LogoLowerLeft.png", UriKind.Absolute));
-            } catch { }
+            }
+            catch { }
 
             try
             {
                 LogoLowerRight.Source = new BitmapImage(new Uri(AppDomain.CurrentDomain.BaseDirectory + @"..\logos\LogoLowerRight.png", UriKind.Absolute));
-            } catch { }
+            }
+            catch { }
 
             try
             {
                 LogoUpperLeft.Source = new BitmapImage(new Uri(AppDomain.CurrentDomain.BaseDirectory + @"..\logos\LogoUpperLeft.png", UriKind.Absolute));
-            } catch { }
+            }
+            catch { }
 
             try
             {
                 LogoUpperRight.Source = new BitmapImage(new Uri(AppDomain.CurrentDomain.BaseDirectory + @"..\logos\LogoUpperRight.png", UriKind.Absolute));
-            } catch { }
+            }
+            catch { }
         }
 
         private void setGameTime(TimeSpan timeSpan)
@@ -245,13 +248,12 @@ namespace ScoreCounter
             if (timerGameTime.IsEnabled)
             {
                 stopGameTime();
-
-                setBreakTime(resetBreakTime);
-                startBreakTime();
+                buttonNextPoint.IsEnabled = true;
             }
             else
             {
                 startGameTime();
+                buttonNextPoint.IsEnabled = false;
             }
         }
 
@@ -346,35 +348,31 @@ namespace ScoreCounter
 
         private void Button_ClickBreakTime200(object sender, RoutedEventArgs e)
         {
-            setResetBreakTime(TimeSpan.FromSeconds(120));
-            setBreakTime(resetBreakTime);
+            setBreakTime(TimeSpan.FromSeconds(120));
         }
 
         private void Button_ClickBreakTime130(object sender, RoutedEventArgs e)
         {
-            setResetBreakTime(TimeSpan.FromSeconds(90));
-            setBreakTime(resetBreakTime);
-
+            setBreakTime(TimeSpan.FromSeconds(90));
         }
 
         private void Button_ClickBreakTime100(object sender, RoutedEventArgs e)
         {
-            setResetBreakTime(TimeSpan.FromSeconds(60));
-            setBreakTime(resetBreakTime);
-
+            setBreakTime(TimeSpan.FromSeconds(60));
         }
 
         private void Button_ClickBreakTime030(object sender, RoutedEventArgs e)
         {
-            setResetBreakTime(TimeSpan.FromSeconds(30));
-            setBreakTime(resetBreakTime);
-
+            setBreakTime(TimeSpan.FromSeconds(30));
         }
+        private void Button_ClickBreakTime020(object sender, RoutedEventArgs e)
+        {
+            setBreakTime(TimeSpan.FromSeconds(20));
+        }
+
         private void Button_ClickBreakTime010(object sender, RoutedEventArgs e)
         {
-            setResetBreakTime(TimeSpan.FromSeconds(10));
-            setBreakTime(resetBreakTime);
-
+            setBreakTime(TimeSpan.FromSeconds(10));
         }
 
         private void Button_ClickResetBreakTime(object sender, RoutedEventArgs e)
@@ -421,18 +419,32 @@ namespace ScoreCounter
 
         private void Button_ClickTeam1TimeOut(object sender, RoutedEventArgs e)
         {
-
+            if (timerBreakTime.IsEnabled &&
+                breakTime >= TimeSpan.FromMinutes(1))
+            {
+                breakTime = breakTime.Add(settings.timeoutTime);
+            }
         }
 
         private void Button_ClickTeam2TimeOut(object sender, RoutedEventArgs e)
         {
-
+            if (timerBreakTime.IsEnabled &&
+                breakTime >= TimeSpan.FromMinutes(1))
+            {
+                breakTime = breakTime.Add(settings.timeoutTime);
+            }
         }
 
         private void Button_ClickOpenSettings(object sender, RoutedEventArgs e)
         {
             SettingsDialog dialog = new SettingsDialog();
-            dialog.Show();
+            dialog.Closed += Dialog_Closed;
+            dialog.ShowDialog();
+        }
+
+        private void Dialog_Closed(object sender, EventArgs e)
+        {
+            updateFromSettings();
         }
 
         private void Window_Closing(object sender, System.ComponentModel.CancelEventArgs e)
@@ -440,11 +452,15 @@ namespace ScoreCounter
             writeSettings();
         }
 
-        private void Button_ClickNewGame(object sender, System.ComponentModel.CancelEventArgs e)
+        private void Button_ClickNextPoint(object sender, RoutedEventArgs e)
         {
-            // TODO reset everything for the next game
+            setBreakTime(resetBreakTime);
+            startBreakTime();
+
+            buttonNextPoint.IsEnabled = false;
         }
 
-        
+
+
     }
 }

@@ -101,9 +101,9 @@
                             <RowDefinition Height="1*"></RowDefinition>
                         </Grid.RowDefinitions>
                         <Button Name="buttonStartGameTime" IsEnabled="True" Grid.Row="0" Content="Start" Click="Button_ClickStartGameTime"></Button>
-                        <Button Name="buttonResetGameTime" IsEnabled="True" Grid.Row="1" Content="Reset" Click="Button_ClickResetGameTime"></Button>
-                        <Button IsEnabled="True" Grid.Row="2" Content="New Game" Click="Button_ClickNewGame"></Button>
-                        <Button IsEnabled="True" Grid.Row="4" Content="Settings" Click="Button_ClickOpenSettings"></Button>
+                        <Button Name="buttonNextPoint" IsEnabled="False" Grid.Row="1" Content="Next Point" Click="Button_ClickNextPoint"></Button>
+                        <Button Name="buttonResetGameTime" IsEnabled="True" Grid.Row="2" Content="Reset" Click="Button_ClickResetGameTime"></Button>
+                        <Button IsEnabled="True" Grid.Row="5" Content="Settings" Click="Button_ClickOpenSettings"></Button>
                     </Grid>
                 </Grid>
             </GroupBox>
@@ -147,7 +147,8 @@
                         <Button IsEnabled="True" Grid.Column="1" Grid.Row="1" Content="1:30" Click="Button_ClickBreakTime130"></Button>
                         <Button IsEnabled="True" Grid.Column="2" Grid.Row="0" Content="1:00" Click="Button_ClickBreakTime100"></Button>
                         <Button IsEnabled="True" Grid.Column="2" Grid.Row="1" Content="0:30" Click="Button_ClickBreakTime030"></Button>
-                        <Button IsEnabled="True" Grid.Column="3" Grid.Row="0" Content="0:10" Click="Button_ClickBreakTime010"></Button>
+                        <Button IsEnabled="True" Grid.Column="3" Grid.Row="0" Content="0:20" Click="Button_ClickBreakTime020"></Button>
+                        <Button IsEnabled="True" Grid.Column="3" Grid.Row="1" Content="0:10" Click="Button_ClickBreakTime010"></Button>
                     </Grid>
                 </Grid>
             </GroupBox>
