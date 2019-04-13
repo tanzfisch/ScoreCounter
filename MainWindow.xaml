@@ -17,28 +17,37 @@
             <ColumnDefinition Width="1*" />
             <ColumnDefinition Width="0.1*" />
         </Grid.ColumnDefinitions>
+
         <Grid Grid.Column="1">
             <Grid>
                 <Grid.RowDefinitions>
                     <RowDefinition Height="1*"></RowDefinition>
                     <RowDefinition Height="1*"></RowDefinition>
-                    <RowDefinition Height="3*"></RowDefinition>
                     <RowDefinition Height="1*"></RowDefinition>
                     <RowDefinition Height="1*"></RowDefinition>
-                    <RowDefinition Height="7*"></RowDefinition>
+                    <RowDefinition Height="1*"></RowDefinition>
+                    <RowDefinition Height="1*"></RowDefinition>
+                    <RowDefinition Height="4*"></RowDefinition>
+                    <RowDefinition Height="4*"></RowDefinition>
                 </Grid.RowDefinitions>
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="1*"></ColumnDefinition>
+                    <ColumnDefinition Width="3*"></ColumnDefinition>
                     <ColumnDefinition Width="1*"></ColumnDefinition>
                 </Grid.ColumnDefinitions>
-                <Viewbox Grid.Row="1" Grid.ColumnSpan="2">
+                <Viewbox Grid.Row="1" Grid.ColumnSpan="3">
                     <TextBox Grid.Row="0" BorderThickness="0" Text="Team 1" TextAlignment="Center" Background="Black" Foreground="Red" FontWeight="Bold"></TextBox>
                 </Viewbox>
-                <Viewbox Grid.Row="2" Grid.ColumnSpan="2">
-                    <Label Content="00" Foreground="Green" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" FontWeight="Bold" Margin="0" Padding="0" FontFamily="Tw Cen MT Condensed Extra Bold"/>
+                <Viewbox Grid.Column="1" Grid.Row="2" Grid.RowSpan="3">
+                    <Label Name="team1Points" Content="00" Foreground="Green" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" FontWeight="Bold" Margin="0" Padding="0" FontFamily="Tw Cen MT Condensed Extra Bold"/>
                 </Viewbox>
-                <Button IsEnabled="True" Grid.Row="3" Grid.Column="0" Content="Time Out"></Button>
-                <Button IsEnabled="True" Grid.Row="3" Grid.Column="1" Content="Towel"></Button>
+
+                <Button Grid.Column="2" Grid.Row="2" Content="+" Click="Button_ClickTeam1IncPoint"></Button>
+                <Button Grid.Column="2" Grid.Row="3" Content="-" Click="Button_ClickTeam1DecPoint"></Button>
+                <Button Grid.Column="2" Grid.Row="4" Content="Zero" Click="Button_ClickTeam1Zero"></Button>
+                <Button IsEnabled="True" Grid.Row="5" Grid.Column="1" Content="Time Out"></Button>
+                <Image Grid.Row="6" Grid.Column="0" Grid.ColumnSpan="3" Name="LogoUpperLeft"></Image>
+                <Image Grid.Row="7" Grid.Column="0" Grid.ColumnSpan="3" Name="LogoLowerLeft"></Image>
             </Grid>
         </Grid>
         <Grid Grid.Column="3">
@@ -66,8 +75,8 @@
                                 <ColumnDefinition Width="0.3*"></ColumnDefinition>
                                 <ColumnDefinition Width="1*"></ColumnDefinition>
                             </Grid.ColumnDefinitions>
-                            <Button IsEnabled="True" Grid.Column="0" Content="+"></Button>
-                            <Button IsEnabled="True" Grid.Column="2" Content="+"></Button>
+                            <Button IsEnabled="True" Grid.Column="0" Content="+" Click="Button_ClickIncMin"></Button>
+                            <Button IsEnabled="True" Grid.Column="2" Content="+" Click="Button_ClickIncSec"></Button>
                         </Grid>
                         <Viewbox Grid.Row="1">
                             <Label Name="labelGameTime" Content="00:00" Foreground="Green" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" FontWeight="Bold" Margin="0" Padding="0" FontFamily="Tw Cen MT Condensed Extra Bold"/>
@@ -78,8 +87,8 @@
                                 <ColumnDefinition Width="0.3*"></ColumnDefinition>
                                 <ColumnDefinition Width="1*"></ColumnDefinition>
                             </Grid.ColumnDefinitions>
-                            <Button IsEnabled="True" Grid.Column="0" Content="-"></Button>
-                            <Button IsEnabled="True" Grid.Column="2" Content="-"></Button>
+                            <Button IsEnabled="True" Grid.Column="0" Content="-" Click="Button_ClickDecMin"></Button>
+                            <Button IsEnabled="True" Grid.Column="2" Content="-" Click="Button_ClickDecSec"></Button>
                         </Grid>
                         <Grid Grid.Row="3">
                             <Grid.RowDefinitions>
@@ -98,8 +107,6 @@
                             <Button IsEnabled="True" Grid.Row="0" Grid.Column="3" Content="10:00" Click="Button_Click1000"></Button>
                             <Button IsEnabled="True" Grid.Row="1" Grid.Column="0" Content="20:00" Click="Button_Click2000"></Button>
                             <Button IsEnabled="True" Grid.Row="1" Grid.Column="1" Content="25:00" Click="Button_Click2500"></Button>
-                            <Button IsEnabled="False" Grid.Row="1" Grid.Column="2" Content="Custom"></Button>
-                            <Button IsEnabled="False" Grid.Row="1" Grid.Column="3" Content="Reset"></Button>
                         </Grid>
                     </Grid>
                     <Grid Grid.Column="2">
@@ -111,12 +118,8 @@
                             <RowDefinition Height="1*"></RowDefinition>
                             <RowDefinition Height="1*"></RowDefinition>
                         </Grid.RowDefinitions>
-                        <Button IsEnabled="True" Grid.Row="0" Content="Start" Click="Button_ClickStart"></Button>
-                        <Button IsEnabled="True" Grid.Row="1" Content="Button1"></Button>
-                        <Button IsEnabled="True" Grid.Row="2" Content="Button2"></Button>
-                        <Button IsEnabled="True" Grid.Row="3" Content="Button3"></Button>
-                        <Button IsEnabled="True" Grid.Row="4" Content="Button4"></Button>
-                        <Button IsEnabled="True" Grid.Row="5" Content="Button5"></Button>
+                        <Button Name="buttonStartGameTime" IsEnabled="True" Grid.Row="0" Content="Start" Click="Button_ClickStartGameTime"></Button>
+                        <Button Name="buttonResetGameTime" IsEnabled="True" Grid.Row="1" Content="Reset" Click="Button_ClickResetGameTime"></Button>
                     </Grid>
                 </Grid>
             </GroupBox>
@@ -133,15 +136,15 @@
                             <ColumnDefinition Width="1*"></ColumnDefinition>
                         </Grid.ColumnDefinitions>
                         <Viewbox Grid.Column="1">
-                            <Label Content="12:12" Foreground="Green" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" FontWeight="Bold" Margin="0" Padding="0" FontFamily="Tw Cen MT Condensed Extra Bold"/>
+                            <Label Name="labelBreakTime" Content="00:00" Foreground="Green" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" FontWeight="Bold" Margin="0" Padding="0" FontFamily="Tw Cen MT Condensed Extra Bold"/>
                         </Viewbox>
                         <Grid Grid.Column="2">
                             <Grid.RowDefinitions>
                                 <RowDefinition Height="1*"></RowDefinition>
                                 <RowDefinition Height="1*"></RowDefinition>
                             </Grid.RowDefinitions>
-                            <Button IsEnabled="True" Grid.Row="0" Content="Start"></Button>
-                            <Button IsEnabled="True" Grid.Row="1" Content="Reset"></Button>
+                            <Button Name="buttonStartBreakTime" IsEnabled="True" Grid.Row="0" Content="Start" Click="Button_ClickStartBreakTime"></Button>
+                            <Button Name="buttonResetBreakTime" IsEnabled="True" Grid.Row="1" Content="Reset" Click="Button_ClickResetBreakTime"></Button>
                         </Grid>
                     </Grid>
                     <Grid Grid.Row="1">
@@ -156,39 +159,44 @@
                             <ColumnDefinition Width="1*"></ColumnDefinition>
                             <ColumnDefinition Width="1*"></ColumnDefinition>
                         </Grid.ColumnDefinitions>
-                        <Button IsEnabled="True" Grid.Column="1" Grid.Row="0" Content="2:00"></Button>
-                        <Button IsEnabled="True" Grid.Column="1" Grid.Row="1" Content="1:30"></Button>
-                        <Button IsEnabled="True" Grid.Column="2" Grid.Row="0" Content="1:00"></Button>
-                        <Button IsEnabled="True" Grid.Column="2" Grid.Row="1" Content="0:30"></Button>
-                        <Button IsEnabled="True" Grid.Column="3" Grid.Row="0" Content="0:10"></Button>
-                        <Button IsEnabled="True" Grid.Column="3" Grid.Row="1" Content="Custom"></Button>
+                        <Button IsEnabled="True" Grid.Column="1" Grid.Row="0" Content="2:00" Click="Button_ClickBreakTime200"></Button>
+                        <Button IsEnabled="True" Grid.Column="1" Grid.Row="1" Content="1:30" Click="Button_ClickBreakTime130"></Button>
+                        <Button IsEnabled="True" Grid.Column="2" Grid.Row="0" Content="1:00" Click="Button_ClickBreakTime100"></Button>
+                        <Button IsEnabled="True" Grid.Column="2" Grid.Row="1" Content="0:30" Click="Button_ClickBreakTime030"></Button>
+                        <Button IsEnabled="True" Grid.Column="3" Grid.Row="0" Content="0:10" Click="Button_ClickBreakTime010"></Button>
                     </Grid>
                 </Grid>
             </GroupBox>
         </Grid>
         <Grid Grid.Column="5">
-            <Grid>
-                <Grid.RowDefinitions>
-                    <RowDefinition Height="1*"></RowDefinition>
-                    <RowDefinition Height="1*"></RowDefinition>
-                    <RowDefinition Height="3*"></RowDefinition>
-                    <RowDefinition Height="1*"></RowDefinition>
-                    <RowDefinition Height="1*"></RowDefinition>
-                    <RowDefinition Height="7*"></RowDefinition>
-                </Grid.RowDefinitions>
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="1*"></ColumnDefinition>
-                    <ColumnDefinition Width="1*"></ColumnDefinition>
-                </Grid.ColumnDefinitions>
-                <Viewbox Grid.Row="1" Grid.ColumnSpan="2">
-                    <TextBox Grid.Row="0" BorderThickness="0" Text="Team 2" TextAlignment="Center" Background="Black" Foreground="Red" FontWeight="Bold"></TextBox>
-                </Viewbox>
-                <Viewbox Grid.Row="2" Grid.ColumnSpan="2">
-                    <Label Content="00" Foreground="Green" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" FontWeight="Bold" Margin="0" Padding="0" FontFamily="Tw Cen MT Condensed Extra Bold"/>
-                </Viewbox>
-                <Button IsEnabled="True" Grid.Row="3" Grid.Column="0" Content="Time Out"></Button>
-                <Button IsEnabled="True" Grid.Row="3" Grid.Column="1" Content="Towel"></Button>
-            </Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="1*"></RowDefinition>
+                <RowDefinition Height="1*"></RowDefinition>
+                <RowDefinition Height="1*"></RowDefinition>
+                <RowDefinition Height="1*"></RowDefinition>
+                <RowDefinition Height="1*"></RowDefinition>
+                <RowDefinition Height="1*"></RowDefinition>
+                <RowDefinition Height="4*"></RowDefinition>
+                <RowDefinition Height="4*"></RowDefinition>
+            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="1*"></ColumnDefinition>
+                <ColumnDefinition Width="3*"></ColumnDefinition>
+                <ColumnDefinition Width="1*"></ColumnDefinition>
+            </Grid.ColumnDefinitions>
+            <Viewbox Grid.Row="1" Grid.ColumnSpan="3">
+                <TextBox Grid.Row="0" BorderThickness="0" Text="Team 2" TextAlignment="Center" Background="Black" Foreground="Red" FontWeight="Bold"></TextBox>
+            </Viewbox>
+            <Viewbox Grid.Column="1" Grid.Row="2" Grid.RowSpan="3">
+                <Label Name="team2Points" Content="00" Foreground="Green" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" FontWeight="Bold" Margin="0" Padding="0" FontFamily="Tw Cen MT Condensed Extra Bold"/>
+            </Viewbox>
+
+            <Button Grid.Column="0" Grid.Row="2" Content="+" Click="Button_ClickTeam2IncPoint"></Button>
+            <Button Grid.Column="0" Grid.Row="3" Content="-" Click="Button_ClickTeam2DecPoint"></Button>
+            <Button Grid.Column="0" Grid.Row="4" Content="Zero" Click="Button_ClickTeam2Zero"></Button>
+            <Button IsEnabled="True" Grid.Row="5" Grid.Column="1" Content="Time Out"></Button>
+            <Image Grid.Row="6" Grid.Column="0" Grid.ColumnSpan="3" Name="LogoUpperRight"></Image>
+            <Image Grid.Row="7" Grid.Column="0" Grid.ColumnSpan="3" Name="LogoLowerRight"></Image>
         </Grid>
     </Grid>
 </Window>
