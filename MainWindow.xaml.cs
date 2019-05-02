@@ -145,6 +145,17 @@ namespace ScoreCounter
             {
                 updateBreakTimeLabel();
 
+                if (breakTime > TimeSpan.FromMinutes(1))
+                {
+                    buttonTeam1Timeout.IsEnabled = true;
+                    buttonTeam2Timeout.IsEnabled = true;
+                }
+                else
+                {
+                    buttonTeam1Timeout.IsEnabled = false;
+                    buttonTeam2Timeout.IsEnabled = false;
+                }
+
                 if (breakTime == TimeSpan.FromMinutes(1))
                 {
                     System.Media.SoundPlayer player = new System.Media.SoundPlayer(@"..\sounds\1min.wav");
@@ -266,6 +277,8 @@ namespace ScoreCounter
         {
             timerGameTime.Stop();
             buttonStartGameTime.Content = "Start";
+            buttonTeam1Towel.IsEnabled = false;
+            buttonTeam2Towel.IsEnabled = false;
         }
 
         private void startGameTime()
@@ -276,6 +289,8 @@ namespace ScoreCounter
 
             buttonStartGameTime.Content = "Stop";
             buttonStartBreakTime.IsEnabled = false;
+            buttonTeam1Towel.IsEnabled = true;
+            buttonTeam2Towel.IsEnabled = true;
         }
 
         private void Button_ClickTeam1IncPoint(object sender, RoutedEventArgs e)
@@ -433,6 +448,8 @@ namespace ScoreCounter
                 breakTime >= TimeSpan.FromMinutes(1))
             {
                 breakTime = breakTime.Add(settings.timeoutTime);
+                System.Media.SoundPlayer player = new System.Media.SoundPlayer(@"..\sounds\timeout.wav");
+                player.Play();
             }
         }
 
@@ -442,7 +459,25 @@ namespace ScoreCounter
                 breakTime >= TimeSpan.FromMinutes(1))
             {
                 breakTime = breakTime.Add(settings.timeoutTime);
+                System.Media.SoundPlayer player = new System.Media.SoundPlayer(@"..\sounds\timeout.wav");
+                player.Play();
             }
+        }
+
+        private void Button_ClickTeam1Towel(object sender, RoutedEventArgs e)
+        {
+            stopGameTime();
+            buttonNextPoint.IsEnabled = true;
+            System.Media.SoundPlayer player = new System.Media.SoundPlayer(@"..\sounds\towel.wav");
+            player.Play();
+        }
+
+        private void Button_ClickTeam2Towel(object sender, RoutedEventArgs e)
+        {
+            stopGameTime();
+            buttonNextPoint.IsEnabled = true;
+            System.Media.SoundPlayer player = new System.Media.SoundPlayer(@"..\sounds\towel.wav");
+            player.Play();
         }
 
         private void Button_ClickOpenSettings(object sender, RoutedEventArgs e)
