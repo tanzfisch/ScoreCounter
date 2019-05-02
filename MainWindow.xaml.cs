@@ -62,9 +62,13 @@ namespace ScoreCounter
         private void updateFromSettings()
         {
             setResetGameTime(settings.gameTime);
-            setGameTime(resetGameTime);
             setResetBreakTime(settings.breakTime);
-            setBreakTime(resetBreakTime);
+
+            if (!timerBreakTime.IsEnabled && !timerGameTime.IsEnabled)
+            {
+                setGameTime(resetGameTime);
+                setBreakTime(resetBreakTime);
+            }
         }
 
         static void AddUpdateAppSettings(string key, string value)
@@ -130,6 +134,7 @@ namespace ScoreCounter
                     setBreakTime(resetBreakTime);
 
                     buttonNextPoint.IsEnabled = false;
+                    buttonStartBreakTime.IsEnabled = true;
                 }
                 gameTime = gameTime.Add(TimeSpan.FromMilliseconds(-100));
             }, Application.Current.Dispatcher);
@@ -270,6 +275,7 @@ namespace ScoreCounter
             timerGameTime.Start();
 
             buttonStartGameTime.Content = "Stop";
+            buttonStartBreakTime.IsEnabled = false;
         }
 
         private void Button_ClickTeam1IncPoint(object sender, RoutedEventArgs e)
@@ -336,6 +342,9 @@ namespace ScoreCounter
         {
             timerBreakTime.Stop();
             buttonStartBreakTime.Content = "Start";
+            buttonTeam1Timeout.IsEnabled = false;
+            buttonTeam2Timeout.IsEnabled = false;
+            buttonStartGameTime.IsEnabled = true;
         }
 
         private void startBreakTime()
@@ -344,6 +353,7 @@ namespace ScoreCounter
             buttonStartBreakTime.Content = "Stop";
             buttonTeam1Timeout.IsEnabled = true;
             buttonTeam2Timeout.IsEnabled = true;
+            buttonStartGameTime.IsEnabled = false;
         }
 
         private void Button_ClickBreakTime200(object sender, RoutedEventArgs e)
@@ -458,6 +468,7 @@ namespace ScoreCounter
             startBreakTime();
 
             buttonNextPoint.IsEnabled = false;
+            buttonStartBreakTime.IsEnabled = true;
         }
 
 
