@@ -28,6 +28,27 @@ namespace ScoreCounter
         private uint pointsTeam1;
         private uint pointsTeam2;
 
+        private System.Media.SoundPlayer sound1min_warning = new System.Media.SoundPlayer(@"..\sounds\1min_warning.wav");
+        private System.Media.SoundPlayer sound30sec = new System.Media.SoundPlayer(@"..\sounds\30sec.wav");
+        private System.Media.SoundPlayer sound20sec = new System.Media.SoundPlayer(@"..\sounds\20sec.wav");
+        private System.Media.SoundPlayer sound10sec = new System.Media.SoundPlayer(@"..\sounds\10sec.wav");
+        private System.Media.SoundPlayer sound10 = new System.Media.SoundPlayer(@"..\sounds\10.wav");
+        private System.Media.SoundPlayer sound9 = new System.Media.SoundPlayer(@"..\sounds\9.wav");
+        private System.Media.SoundPlayer sound8 = new System.Media.SoundPlayer(@"..\sounds\8.wav");
+        private System.Media.SoundPlayer sound7 = new System.Media.SoundPlayer(@"..\sounds\7.wav");
+        private System.Media.SoundPlayer sound6 = new System.Media.SoundPlayer(@"..\sounds\6.wav");
+        private System.Media.SoundPlayer sound5 = new System.Media.SoundPlayer(@"..\sounds\5.wav");
+        private System.Media.SoundPlayer sound4 = new System.Media.SoundPlayer(@"..\sounds\4.wav");
+        private System.Media.SoundPlayer sound3 = new System.Media.SoundPlayer(@"..\sounds\3.wav");
+        private System.Media.SoundPlayer sound2 = new System.Media.SoundPlayer(@"..\sounds\2.wav");
+        private System.Media.SoundPlayer sound1 = new System.Media.SoundPlayer(@"..\sounds\1.wav");
+        private System.Media.SoundPlayer soundBeeeep = new System.Media.SoundPlayer(@"..\sounds\beeeeep.wav");
+        private System.Media.SoundPlayer soundBepp = new System.Media.SoundPlayer(@"..\sounds\bepp.wav");
+        private System.Media.SoundPlayer sound1min = new System.Media.SoundPlayer(@"..\sounds\1min.wav");
+        private System.Media.SoundPlayer sound2min = new System.Media.SoundPlayer(@"..\sounds\2min.wav");
+        private System.Media.SoundPlayer soundTimeout = new System.Media.SoundPlayer(@"..\sounds\timeout.wav");
+        private System.Media.SoundPlayer soundTowel = new System.Media.SoundPlayer(@"..\sounds\towel.wav");
+
         static public Settings settings = new Settings();
 
         public MainWindow()
@@ -121,14 +142,58 @@ namespace ScoreCounter
 
                 if (gameTime == TimeSpan.FromMinutes(1))
                 {
-                    System.Media.SoundPlayer player = new System.Media.SoundPlayer(@"..\sounds\1min.wav");
-                    player.Play();
+                    sound1min_warning.Play();
+                }
+
+                if (gameTime == TimeSpan.FromSeconds(30))
+                {
+                    sound30sec.Play();
+                }
+
+                if (gameTime == TimeSpan.FromSeconds(10))
+                {
+                    sound10.Play();
+                }
+                if (gameTime == TimeSpan.FromSeconds(9))
+                {
+                    sound9.Play();
+                }
+                if (gameTime == TimeSpan.FromSeconds(8))
+                {
+                    sound8.Play();
+                }
+                if (gameTime == TimeSpan.FromSeconds(7))
+                {
+                    sound7.Play();
+                }
+                if (gameTime == TimeSpan.FromSeconds(6))
+                {
+                    sound6.Play();
+                }
+                if (gameTime == TimeSpan.FromSeconds(5))
+                {
+                    sound5.Play();
+                }
+                if (gameTime == TimeSpan.FromSeconds(4))
+                {
+                    sound4.Play();
+                }
+                if (gameTime == TimeSpan.FromSeconds(3))
+                {
+                    sound3.Play();
+                }
+                if (gameTime == TimeSpan.FromSeconds(2))
+                {
+                    sound2.Play();
+                }
+                if (gameTime == TimeSpan.FromSeconds(1))
+                {
+                    sound1.Play();
                 }
 
                 if (gameTime == TimeSpan.Zero)
                 {
-                    System.Media.SoundPlayer player = new System.Media.SoundPlayer(@"..\sounds\beeeeep.wav");
-                    player.Play();
+                    soundBeeeep.Play();
 
                     stopGameTime();
                     setBreakTime(resetBreakTime);
@@ -158,48 +223,39 @@ namespace ScoreCounter
 
                 if (breakTime == TimeSpan.FromMinutes(1))
                 {
-                    System.Media.SoundPlayer player = new System.Media.SoundPlayer(@"..\sounds\1min.wav");
-                    player.Play();
+                    sound1min.Play();
                 }
                 else if (breakTime == TimeSpan.FromMinutes(2))
                 {
-                    System.Media.SoundPlayer player = new System.Media.SoundPlayer(@"..\sounds\2min.wav");
-                    player.Play();
+                    sound2min.Play();
                 }
                 else if (breakTime == TimeSpan.FromSeconds(30))
                 {
-                    System.Media.SoundPlayer player = new System.Media.SoundPlayer(@"..\sounds\30sec.wav");
-                    player.Play();
+                    sound30sec.Play();
                 }
                 else if (breakTime == TimeSpan.FromSeconds(20))
                 {
-                    System.Media.SoundPlayer player = new System.Media.SoundPlayer(@"..\sounds\20sec.wav");
-                    player.Play();
+                    sound20sec.Play();
                 }
                 else if (breakTime == TimeSpan.FromSeconds(10))
                 {
-                    System.Media.SoundPlayer player = new System.Media.SoundPlayer(@"..\sounds\10sec.wav");
-                    player.Play();
+                    sound10sec.Play();
                 }
                 else if (breakTime == TimeSpan.FromSeconds(3))
                 {
-                    System.Media.SoundPlayer player = new System.Media.SoundPlayer(@"..\sounds\bepp.wav");
-                    player.Play();
+                    soundBepp.Play();
                 }
                 else if (breakTime == TimeSpan.FromSeconds(2))
                 {
-                    System.Media.SoundPlayer player = new System.Media.SoundPlayer(@"..\sounds\bepp.wav");
-                    player.Play();
+                    soundBepp.Play();
                 }
                 else if (breakTime == TimeSpan.FromSeconds(1))
                 {
-                    System.Media.SoundPlayer player = new System.Media.SoundPlayer(@"..\sounds\bepp.wav");
-                    player.Play();
+                    soundBepp.Play();
                 }
                 else if (breakTime == TimeSpan.Zero)
                 {
-                    System.Media.SoundPlayer player = new System.Media.SoundPlayer(@"..\sounds\beeeeep.wav");
-                    player.Play();
+                    soundBeeeep.Play();
 
                     stopBreakTime();
                     startGameTime();
@@ -448,8 +504,7 @@ namespace ScoreCounter
                 breakTime >= TimeSpan.FromMinutes(1))
             {
                 breakTime = breakTime.Add(settings.timeoutTime);
-                System.Media.SoundPlayer player = new System.Media.SoundPlayer(@"..\sounds\timeout.wav");
-                player.Play();
+                soundTimeout.Play();
             }
         }
 
@@ -459,25 +514,22 @@ namespace ScoreCounter
                 breakTime >= TimeSpan.FromMinutes(1))
             {
                 breakTime = breakTime.Add(settings.timeoutTime);
-                System.Media.SoundPlayer player = new System.Media.SoundPlayer(@"..\sounds\timeout.wav");
-                player.Play();
+                soundTimeout.Play();
             }
         }
 
         private void Button_ClickTeam1Towel(object sender, RoutedEventArgs e)
         {
             stopGameTime();
-            buttonNextPoint.IsEnabled = true;
-            System.Media.SoundPlayer player = new System.Media.SoundPlayer(@"..\sounds\towel.wav");
-            player.Play();
+            buttonNextPoint.IsEnabled = true;            
+            soundTowel.Play();
         }
 
         private void Button_ClickTeam2Towel(object sender, RoutedEventArgs e)
         {
             stopGameTime();
             buttonNextPoint.IsEnabled = true;
-            System.Media.SoundPlayer player = new System.Media.SoundPlayer(@"..\sounds\towel.wav");
-            player.Play();
+            soundTowel.Play();
         }
 
         private void Button_ClickOpenSettings(object sender, RoutedEventArgs e)
