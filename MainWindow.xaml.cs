@@ -144,51 +144,21 @@ namespace ScoreCounter
                 {
                     sound1min_warning.Play();
                 }
-
-                if (gameTime == TimeSpan.FromSeconds(30))
+                else if (gameTime == TimeSpan.FromSeconds(30))
                 {
                     sound30sec.Play();
                 }
-
-                if (gameTime == TimeSpan.FromSeconds(10))
+                else if (gameTime == TimeSpan.FromSeconds(3))
                 {
-                    sound10.Play();
+                    soundBepp.Play();
                 }
-                if (gameTime == TimeSpan.FromSeconds(9))
+                else if (gameTime == TimeSpan.FromSeconds(2))
                 {
-                    sound9.Play();
+                    soundBepp.Play();
                 }
-                if (gameTime == TimeSpan.FromSeconds(8))
+                else if (gameTime == TimeSpan.FromSeconds(1))
                 {
-                    sound8.Play();
-                }
-                if (gameTime == TimeSpan.FromSeconds(7))
-                {
-                    sound7.Play();
-                }
-                if (gameTime == TimeSpan.FromSeconds(6))
-                {
-                    sound6.Play();
-                }
-                if (gameTime == TimeSpan.FromSeconds(5))
-                {
-                    sound5.Play();
-                }
-                if (gameTime == TimeSpan.FromSeconds(4))
-                {
-                    sound4.Play();
-                }
-                if (gameTime == TimeSpan.FromSeconds(3))
-                {
-                    sound3.Play();
-                }
-                if (gameTime == TimeSpan.FromSeconds(2))
-                {
-                    sound2.Play();
-                }
-                if (gameTime == TimeSpan.FromSeconds(1))
-                {
-                    sound1.Play();
+                    soundBepp.Play();
                 }
 
                 if (gameTime == TimeSpan.Zero)
